@@ -66,7 +66,7 @@ export default function Product() {
         }).catch(()=>{
             swal.fire({
                 icon:"error",
-                title:"Failed to load product"
+                title:"Failed to load products"
             })
         })
     }
@@ -84,6 +84,9 @@ export default function Product() {
     function changePassword(){
         navigate("/changepass");
     }
+    function showCart(){
+       navigate("/cart");
+    }
     return(
         <>
            <div className={styles.head}>
@@ -96,7 +99,7 @@ export default function Product() {
             <div className={styles.dropdown_content}>
               <li onClick={logoutUser}>Logout</li>
               <li onClick={changePassword}>Change Password</li>
-              <li>View Cart</li>
+              <li onClick={showCart}>View Cart</li>
             </div>
           ) : (
             <div></div>

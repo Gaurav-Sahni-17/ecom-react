@@ -17,6 +17,7 @@ const getfiveproducts = require('./controllers/postgetfiveproducts.js');
 const postchangepass = require('./controllers/postchangepass.js');
 const postforgot = require('./controllers/postforgot.js');
 const postaddtocart = require('./controllers/postaddtocart.js');
+const postgetcartproducts = require('./controllers/postgetcartproducts');
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
@@ -64,7 +65,9 @@ app.post("/changepass",verifyJWT,postchangepass);
 
 app.post("/forgot",postforgot);
 
-app.post("/addtocart",verifyJWT,postaddtocart)
+app.post("/addtocart",verifyJWT,postaddtocart);
+
+app.post("/getcartproducts",postgetcartproducts);
 
 db.connect((err)=>{
     if(err)

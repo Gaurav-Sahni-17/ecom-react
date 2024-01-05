@@ -9,6 +9,7 @@ import Product from "./components/Product/product";
 import Changepass from "./components/Changepass/changepass";
 import Forgot from "./components/Forgot/forgot"
 import CheckMail from "./components/checkMail/checkMail"
+import Cart from "./components/Cart/cart"
 export default function App(){
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -23,6 +24,7 @@ export default function App(){
         <Route path="/changepass" element={<Changepass/>}/>
         <Route path="/forgot" element={<Forgot/>}/>
         <Route path="/checkMail" element={<CheckMail/>}/>
+        <Route path="/cart" element={<Cart/>}/>
         </Route>
         )
       );

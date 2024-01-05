@@ -1,21 +1,21 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 import Create from "./create.jsx"
 import styles from "./cart.module.css"
-import { AiOutlineMenu } from 'react-icons/ai'; 
+import { AiOutlineMenu } from 'react-icons/ai';
 import swal from "sweetalert2"
 import Logout from "../../controllers/logout/logout.js"
+import getcartproducts from "../../controllers/cart/getcartproducts.js";
 
 
 export default function Product() {
     const [user, setUser] = useState({});
-    const [products,setProducts]=useState([]);
+    const [products, setProducts] = useState([]);
     const [open, setOpen] = useState(false);
-    const [flag,setFlag]=useState(true);
     const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(!open);
-      };
+    };
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -38,75 +38,81 @@ export default function Product() {
                     }
                     return res.json();
                 }).then((data) => {
-                    setUser({...data});
+                    setUser({ ...data });
                 }).catch((err) => {
                     navigate("/login");
                 })
             }
         }
-    }, [])  
-    useEffect(()=>{
-        getFiveProducts();
-    },[user.username])
-    function getFiveProducts(){
-        if(user.username){
-        fetch("http://localhost:3000/getcartproducts",{
-            headers:{"content-type":"application/json"},
-        })
-        .then((res)=>{
-             return res.json();
-        }).then((data)=>{
-            setProducts([...products,...data]);
-        }).catch(()=>{
-            swal.fire({
-                icon:"error",
-                title:"Failed to load products"
-            })
-        })
+    }, [])
+    useEffect(() => {
+        getCartProducts();
+    }, [user.username])
+    function getCartProducts() {
+        console.log(user);
+        if (user.username) {
+
+           getcartproducts(user.email)
+           .then((data) => {
+            if(data==201){
+                swal.fire({
+                    title: "Nothing in Cart",
+                    icon: "info"
+                }).then(() => {
+                    navigate("/product")
+                })
+            }
+            else{
+                    console.log(data);
+                    setProducts([...products, ...data]);
+            }
+                }).catch((err) => {
+                    console.log(err);
+                    swal.fire({
+                        icon: "error",
+                        title:err
+                    })
+                })
+        }
     }
-    }
-    function logoutUser(){
-        Logout().then(()=>{
+    function logoutUser() {
+        Logout().then(() => {
             navigate("/");
-        }).catch(()=>{
+        }).catch(() => {
             swal.fire({
-                icon:"error",
-                title:"Failed to logout"
+                icon: "error",
+                title: "Failed to logout"
             })
         })
     }
-    function changePassword(){
+    function changePassword() {
         navigate("/changepass");
     }
-    return(
+    return (
         <>
-        { flag ?
-            <>
-           <div className={styles.head}>
+            <div className={styles.head}>
                 <h1 className={styles.heading}>Welcome {user.username}</h1>
-                 <div className={styles.dropdown}>
-          <button onClick={handleOpen} className={styles.dropbtn}>
-            <AiOutlineMenu />
-          </button>
-          {open ? (
-            <div className={styles.dropdown_content}>
-              <li onClick={logoutUser}>Logout</li>
-              <li onClick={changePassword}>Change Password</li>
-            </div>
-          ) : (
-            <div></div>
-          )}
-        </div>
+                <div className={styles.dropdown}>
+                    <button onClick={handleOpen} className={styles.dropbtn}>
+                        <AiOutlineMenu />
+                    </button>
+                    {open ? (
+                        <div className={styles.dropdown_content}>
+                            <li onClick={logoutUser}>Logout</li>
+                            <li onClick={changePassword}>Change Password</li>
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
+                </div>
             </div>
             <h2 className={styles.form_head}>My Cart</h2>
             <div className={styles.productContainer}>
-                { products.map((product)=>{
+                {products.map((product) => {
                     return <Create data={product} />
                 })
-            }
+                }
             </div>
-            </>
-            : <div></div>}
-            </>
+        </>
     )
 }

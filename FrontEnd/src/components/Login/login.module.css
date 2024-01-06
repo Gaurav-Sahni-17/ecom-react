@@ -64,7 +64,7 @@ cursor: pointer;
     margin-top: 10px;
 }
 .form{
-    height: 300px;
+    height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;

@@ -2,7 +2,7 @@ const sendMail=require("../mailmethods/sendEmail.js");
 const db=require ('../dbmethods/db.js');
 module.exports=function(req,res){
   req.body.id=Date.now();
-  db.query("Select * from user where email=?",[req.body.email],(err,result,fields)=>{
+  db.query("Select * from user left join sellers on user.id=sellers.id where user.email=? or sellers.email=?",[req.body.email,req.body.email],(err,result,fields)=>{
     if(result.length)
     {
         res.status(400).end();   

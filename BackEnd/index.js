@@ -21,6 +21,8 @@ const postgetcartproducts = require('./controllers/postgetcartproducts');
 const postremovefromcart = require('./controllers/postremovefromcart.js');
 const postincrease = require('./controllers/postincrease.js');
 const postdecrease = require('./controllers/postdecrease.js');
+const postsellersignup = require('./controllers/postsellersignup.js');
+const postpurchasecart = require('./controllers/postpurchasecart.js');
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
@@ -77,6 +79,10 @@ app.post("/removefromcart",verifyJWT,postremovefromcart);
 app.post("/increase",verifyJWT,postincrease);
 
 app.post("/decrease",verifyJWT,postdecrease);
+
+app.post("/sellersignup",postsellersignup);
+
+app.post("/purchasecart",postpurchasecart);
 
 db.connect((err)=>{
     if(err)

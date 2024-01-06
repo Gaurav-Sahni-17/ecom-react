@@ -1,11 +1,11 @@
 import { Link,useNavigate } from "react-router-dom"
 import { useState } from "react"
-import  styles from "./signup.module.css"
-import signupuser from "../../controllers/user/signupuser";
-import swal from "sweetalert2";
+import  styles from "./sellersignup.module.css"
+import swal from "sweetalert2"
+import sellersignup from "../../controllers/seller/sellersignup"
 export default function Signup(){
     const navigate=useNavigate();
-    const [data,setData]=useState({username:"",password:"",email:""})
+    const [data,setData]=useState({username:"",password:"",email:"",gst:"",aadhar:"",brand:""})
     const [error,setError]=useState("");
     function changeData(value){
         return function(e){
@@ -13,13 +13,21 @@ export default function Signup(){
         }
     }
      function signup(){
-        if(data.username!=="" && data.email!=="" && data.password!=="")
+        if(data.username!=="" && data.email!=="" && data.password!=="" && data.aadhar!="" && data.brand!="" && data.gst!="")
         {
             if(data.password.match("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}"))
             {
-            signupuser(data)
+                if(aadhar.toString().length==12)
+                {
+             sellersignup(data)
             .then(()=>{
-                navigate("/verifymail");
+                swal.fire({
+                    title:"Signup request send",
+                    icon:"success",
+                    text:"Wait for confirmation mail"
+                }).then(()=>{
+                    navigate("/");
+                })
             }).catch((err)=>{
                 swal.fire({
                     title:err,
@@ -27,6 +35,10 @@ export default function Signup(){
                 })
                 setError("");
             })
+        }
+        else{
+            setError("Invalid Aadhar number");
+        }
         }
         else{
             setError("Password too weak");
@@ -56,10 +68,18 @@ export default function Signup(){
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" value={data.password} onChange={changeData("password")} placeholder="Enter your password"/>
             </div>
-            <div className={styles.loginacc}>
-                    <Link to="/sellersignup">SignUp as Merchant</Link>
-                    <Link to="/login">Already a user?</Link>
-                </div>
+            <div className={styles.formgroup}>
+                <label for="aadhar">Aadhar Number</label>
+                <input type="number" id="aadhar" name="aadhar" value={data.aadhar} onChange={changeData("aadhar")} placeholder="Enter aadhar no."/>
+            </div>
+            <div className={styles.formgroup}>
+                <label for="gst">GST Number</label>
+                <input type="number" id="gst" name="gst" value={data.gst} onChange={changeData("gst")} placeholder="Enter GST No."/>
+            </div>
+            <div className={styles.formgroup}>
+                <label for="brand">Brand Name</label>
+                <input type="text" id="brand" name="brand" value={data.brand} onChange={changeData("brand")} placeholder="Enter Brand Name"/>
+            </div>
             <div className={styles.btncontainer}>
                 <button type="button" onClick={signup}>SignUp</button>
             </div>

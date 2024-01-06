@@ -9,6 +9,7 @@ import getcartproducts from "../../controllers/cart/getcartproducts.js";
 
 
 export default function Product() {
+    let noofproducts = 0, totalprice = 0;
     const [user, setUser] = useState({});
     const [products, setProducts] = useState([]);
     const [open, setOpen] = useState(false);
@@ -49,27 +50,26 @@ export default function Product() {
         getCartProducts();
     }, [user.username])
     function getCartProducts() {
-        console.log(user);
         if (user.username) {
 
-           getcartproducts(user.email)
-           .then((data) => {
-            if(data==201){
-                swal.fire({
-                    title: "Nothing in Cart",
-                    icon: "info"
-                }).then(() => {
-                    navigate("/product")
-                })
-            }
-            else{
-                    setProducts([...data]);
-            }
+            getcartproducts(user.email)
+                .then((data) => {
+                    if (data == 201) {
+                        swal.fire({
+                            title: "Nothing in Cart",
+                            icon: "info"
+                        }).then(() => {
+                            navigate("/product")
+                        })
+                    }
+                    else {
+                        setProducts([...data]);
+                    }
                 }).catch((err) => {
                     console.log(err);
                     swal.fire({
                         icon: "error",
-                        title:err
+                        title: err
                     })
                 })
         }
@@ -90,22 +90,20 @@ export default function Product() {
         }))
     }
     const increase = (childdata) => {
-        let arr=[];
-        for(let i=0;i<products.length;i++)
-        {
-            arr[i]=products[i];
-            if(products[i].id==childdata){
+        let arr = [];
+        for (let i = 0; i < products.length; i++) {
+            arr[i] = products[i];
+            if (products[i].id == childdata) {
                 arr[i].quantity++;
             }
         }
         setProducts(arr);
     }
     const decrease = (childdata) => {
-        let arr=[];
-        for(let i=0;i<products.length;i++)
-        {
-            arr[i]=products[i];
-            if(products[i].id==childdata){
+        let arr = [];
+        for (let i = 0; i < products.length; i++) {
+            arr[i] = products[i];
+            if (products[i].id == childdata) {
                 arr[i].quantity--;
             }
         }
@@ -114,8 +112,23 @@ export default function Product() {
     function changePassword() {
         navigate("/changepass");
     }
-    function goBack(){
+    function goBack() {
         navigate("/product");
+    }
+    function purchase() {
+        swal.fire({
+            title: "Are you sure?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor:"green",
+            cancelButtonColor:"red",
+            confirmButtonText: 'Yes, I am sure!',
+            cancelButtonText: "No, cancel it!",
+        }).then(function (data) {
+            if (data.isConfirmed) {
+               navigate("/purchaseform");
+            }
+        })
     }
     return (
         <>
@@ -139,10 +152,18 @@ export default function Product() {
             <h2 className={styles.form_head}>My Cart</h2>
             <div className={styles.productContainer}>
                 {products.map((product) => {
-                    return <Create data={product} removeItem={remove} increase={increase} decrease={decrease}/>
+                    noofproducts = noofproducts + product.quantity;
+                    totalprice = totalprice + (product.quantity * product.price);
+                    return <Create data={product} removeItem={remove} increase={increase} decrease={decrease} />
                 })
                 }
             </div>
+            <div className={styles.billcontainer}>
+                <h3>Total Bill</h3>
+                <p>Number of products: {noofproducts}</p>
+                <p>Total Price: {totalprice}</p>
+            </div>
+            <button className={styles.purchase} onClick={purchase}>Purchase Cart</button>
         </>
     )
 }

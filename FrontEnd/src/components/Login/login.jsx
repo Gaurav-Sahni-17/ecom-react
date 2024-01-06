@@ -2,6 +2,7 @@ import { Link,useNavigate } from "react-router-dom"
 import { useState,useEffect } from "react"
 import  styles from "./login.module.css"
 import loginuser from "../../controllers/user/loginuser";
+import swal from "sweetalert2"
 export default function Login(){
     const navigate=useNavigate();
     const [data,setData]=useState({password:"",email:""})
@@ -63,8 +64,12 @@ export default function Login(){
                 else if(data==="mailverify"){
                     navigate("/verifymail");
                 }
-            }).catch((data)=>{
-                setError(data);
+            }).catch((err)=>{
+                swal.fire({
+                    title:err,
+                    icon:"error"
+                })
+                setError("");
             })
         }
         else{
@@ -95,7 +100,7 @@ export default function Login(){
                 <button type="button" onClick={login}>Login</button>
             </div>
         </div>
-        <p className={styles}>{error}</p>
+        <p className={styles.p}>{error}</p>
     </div>
     </div>
         </>

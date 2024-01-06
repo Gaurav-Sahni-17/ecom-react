@@ -13,11 +13,14 @@ const postaddproduct = require('./controllers/postaddproduct.js');
 const postgetallproductsofseller = require('./controllers/postgetallproductsofseller.js');
 const postupdateproduct = require('./controllers/postupdateproduct.js');
 const postdeleteproduct = require('./controllers/postdeleteproduct.js');
-const getfiveproducts = require('./controllers/postgetfiveproducts.js');
+const postgetfiveproducts = require('./controllers/postgetfiveproducts.js');
 const postchangepass = require('./controllers/postchangepass.js');
 const postforgot = require('./controllers/postforgot.js');
 const postaddtocart = require('./controllers/postaddtocart.js');
 const postgetcartproducts = require('./controllers/postgetcartproducts');
+const postremovefromcart = require('./controllers/postremovefromcart.js');
+const postincrease = require('./controllers/postincrease.js');
+const postdecrease = require('./controllers/postdecrease.js');
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
@@ -59,7 +62,7 @@ app.post("/updateproduct",postupdateproduct);
 
 app.post("/deleteproduct",postdeleteproduct);
 
-app.post("/getfiveproducts",getfiveproducts);
+app.post("/getfiveproducts",postgetfiveproducts);
 
 app.post("/changepass",verifyJWT,postchangepass);
 
@@ -68,6 +71,12 @@ app.post("/forgot",postforgot);
 app.post("/addtocart",verifyJWT,postaddtocart);
 
 app.post("/getcartproducts",postgetcartproducts);
+
+app.post("/removefromcart",verifyJWT,postremovefromcart);
+
+app.post("/increase",verifyJWT,postincrease);
+
+app.post("/decrease",verifyJWT,postdecrease);
 
 db.connect((err)=>{
     if(err)

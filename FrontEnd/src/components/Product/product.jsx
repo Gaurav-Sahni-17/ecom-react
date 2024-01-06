@@ -57,7 +57,6 @@ export default function Product() {
         .then((res)=>{
              return res.json();
         }).then((data)=>{
-            console.log(data);
             if(data.length<5){
                 setFlag(!flag);
             }

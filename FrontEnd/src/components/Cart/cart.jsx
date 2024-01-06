@@ -63,8 +63,7 @@ export default function Product() {
                 })
             }
             else{
-                    console.log(data);
-                    setProducts([...products, ...data]);
+                    setProducts([...data]);
             }
                 }).catch((err) => {
                     console.log(err);
@@ -85,8 +84,38 @@ export default function Product() {
             })
         })
     }
+    const remove = (childdata) => {
+        setProducts(products.filter((data) => {
+            return data.id != childdata;
+        }))
+    }
+    const increase = (childdata) => {
+        let arr=[];
+        for(let i=0;i<products.length;i++)
+        {
+            arr[i]=products[i];
+            if(products[i].id==childdata){
+                arr[i].quantity++;
+            }
+        }
+        setProducts(arr);
+    }
+    const decrease = (childdata) => {
+        let arr=[];
+        for(let i=0;i<products.length;i++)
+        {
+            arr[i]=products[i];
+            if(products[i].id==childdata){
+                arr[i].quantity--;
+            }
+        }
+        setProducts(arr);
+    }
     function changePassword() {
         navigate("/changepass");
+    }
+    function goBack(){
+        navigate("/product");
     }
     return (
         <>
@@ -98,6 +127,7 @@ export default function Product() {
                     </button>
                     {open ? (
                         <div className={styles.dropdown_content}>
+                            <li onClick={goBack}>Go Back</li>
                             <li onClick={logoutUser}>Logout</li>
                             <li onClick={changePassword}>Change Password</li>
                         </div>
@@ -109,7 +139,7 @@ export default function Product() {
             <h2 className={styles.form_head}>My Cart</h2>
             <div className={styles.productContainer}>
                 {products.map((product) => {
-                    return <Create data={product} />
+                    return <Create data={product} removeItem={remove} increase={increase} decrease={decrease}/>
                 })
                 }
             </div>

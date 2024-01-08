@@ -1,6 +1,7 @@
-export default  function purchaseCart(data){ 
+export default  function rejectseller(data){ 
+    console.log(data);
     return new Promise((resolve,reject)=>{
-         fetch("http://localhost:3000/purchasecart",{
+         fetch("http://localhost:3000/rejectseller",{
             method:"POST",
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify(data)
@@ -12,7 +13,7 @@ export default  function purchaseCart(data){
             }
             else{
                 reject("Something Went Wrong");
-            return;
+                return;    
             }
         }).catch((err)=>{
             reject("Something Went Wrong");

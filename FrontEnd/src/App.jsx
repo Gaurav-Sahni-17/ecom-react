@@ -12,6 +12,7 @@ import CheckMail from "./components/checkMail/checkMail"
 import Cart from "./components/Cart/cart"
 import SellerSignUp from "./components/SellerSignUp/sellersignup"
 import Purchaseform from "./components/Purchaseform/purchaseform"
+import Admin from "./components/Admin/admin"
 export default function App(){
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -29,6 +30,7 @@ export default function App(){
         <Route path="/cart" element={<Cart/>}/>
         <Route path="/sellersignup" element={<SellerSignUp/>}/>
         <Route path="/purchaseform" element={<Purchaseform/>}/>
+        <Route path="/admin" element={<Admin/>}/>
         </Route>
         )
       );

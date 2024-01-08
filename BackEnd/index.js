@@ -23,6 +23,10 @@ const postincrease = require('./controllers/postincrease.js');
 const postdecrease = require('./controllers/postdecrease.js');
 const postsellersignup = require('./controllers/postsellersignup.js');
 const postpurchasecart = require('./controllers/postpurchasecart.js');
+const getallusers = require('./controllers/getallusers.js');
+const getsellerrequests = require('./controllers/getsellerrequests.js');
+const postrejectseller = require('./controllers/postrejectseller.js');
+const postacceptseller = require('./controllers/postacceptseller.js');
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
@@ -83,6 +87,14 @@ app.post("/decrease",verifyJWT,postdecrease);
 app.post("/sellersignup",postsellersignup);
 
 app.post("/purchasecart",postpurchasecart);
+
+app.get("/getallusers",getallusers);
+
+app.get("/getsellerrequests",getsellerrequests);
+
+app.post("/rejectseller",postrejectseller)
+
+app.post("/acceptseller",postacceptseller)
 
 db.connect((err)=>{
     if(err)

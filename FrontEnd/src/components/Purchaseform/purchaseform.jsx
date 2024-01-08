@@ -51,30 +51,46 @@ export default function Signup() {
             })
         }
         else {
-            let orderdata = {
-                firstname: data.firstname,
-                lastname: data.lastname,
-                pin: data.pin,
-                state: data.state,
-                country: data.country,
-                city: data.city,
-                address: data.address,
-                email: user.email,
-                username: user.username
-            }
-            purchaseCart(orderdata)
-                .then(() => {
-                    swal.fire({
-                        title: "Order placed successfully",
-                        icon: "success"
-                    })
+            swal.fire({
+                title: "Are you sure?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "green",
+                cancelButtonColor: "red",
+                confirmButtonText: 'Yes, I am sure!',
+                cancelButtonText: "No, cancel it!",
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    let orderdata = {
+                        firstname: data.firstname,
+                        lastname: data.lastname,
+                        pin: data.pin,
+                        state: data.state,
+                        country: data.country,
+                        city: data.city,
+                        address: data.address,
+                        email: user.email,
+                        username: user.username
+                    }
+                    purchaseCart(orderdata)
+                        .then(() => {
+                            console.log("fgh")
+                            swal.fire({
+                                title: "Order placed successfully",
+                                icon: "success"
+                            }).then(() => {
+                                navigate("/product");
+                            })
+                        })
                         .catch((err) => {
+                            console.log(err);
                             swal.fire({
                                 title: err,
                                 icon: "error"
                             })
                         })
-                })
+                }
+            })
         }
     }
     function changePassword() {

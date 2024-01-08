@@ -10,6 +10,7 @@ import getcartproducts from "../../controllers/cart/getcartproducts.js";
 
 export default function Product() {
     let noofproducts = 0, totalprice = 0;
+    let count=0;
     const [user, setUser] = useState({});
     const [products, setProducts] = useState([]);
     const [open, setOpen] = useState(false);
@@ -57,7 +58,7 @@ export default function Product() {
                     if (data == 201) {
                         swal.fire({
                             title: "Nothing in Cart",
-                            icon: "info"
+                            icon: "warning"
                         }).then(() => {
                             navigate("/product")
                         })
@@ -116,19 +117,26 @@ export default function Product() {
         navigate("/product");
     }
     function purchase() {
-        swal.fire({
-            title: "Are you sure?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor:"green",
-            cancelButtonColor:"red",
-            confirmButtonText: 'Yes, I am sure!',
-            cancelButtonText: "No, cancel it!",
-        }).then(function (data) {
-            if (data.isConfirmed) {
-               navigate("/purchaseform");
-            }
-        })
+        if(products.length===0){
+            swal.fire({
+                title:"Cart is empty",
+                icon:"warning"
+            }).then(()=>{
+                navigate("/product");
+            })
+        }
+        else{
+        if(count==0){
+            navigate("/purchaseform");
+        }
+        else{
+            swal.fire({
+                title:"Out of Stock Item Present",
+                icon:"warning",
+                text:"Please remove out of stock item before continue"
+            })
+        }
+    }
     }
     return (
         <>
@@ -152,8 +160,13 @@ export default function Product() {
             <h2 className={styles.form_head}>My Cart</h2>
             <div className={styles.productContainer}>
                 {products.map((product) => {
+                    if(product.quantity>product.stock){
+                        count++;
+                    }
+                    else{
                     noofproducts = noofproducts + product.quantity;
                     totalprice = totalprice + (product.quantity * product.price);
+                    }
                     return <Create data={product} removeItem={remove} increase={increase} decrease={decrease} />
                 })
                 }

@@ -17,7 +17,7 @@ export default function Signup(){
         {
             if(data.password.match("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}"))
             {
-                if(aadhar.toString().length==12)
+                if(data.aadhar.toString().length==12)
                 {
              sellersignup(data)
             .then(()=>{

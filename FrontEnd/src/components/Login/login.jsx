@@ -53,13 +53,13 @@ export default function Login(){
                     navigate("/seller");
                 }
                 else if(data==="admin"){
-                    navigate("/");
+                    navigate("/admin");
                 }
                 else if(data==="city"){
-                    navigate("/");
+                    navigate("/city");
                 }
                 else if(data==="state"){
-                    navigate("/");
+                    navigate("/state");
                 }
                 else if(data==="mailverify"){
                     navigate("/verifymail");

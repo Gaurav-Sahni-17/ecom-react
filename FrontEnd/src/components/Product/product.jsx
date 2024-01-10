@@ -86,6 +86,9 @@ export default function Product() {
     function showCart(){
        navigate("/cart");
     }
+    function myOrders(){
+        navigate("/myorders");
+    }
     return(
         <>
            <div className={styles.head}>
@@ -99,6 +102,7 @@ export default function Product() {
               <li onClick={logoutUser}>Logout</li>
               <li onClick={changePassword}>Change Password</li>
               <li onClick={showCart}>View Cart</li>
+              <li onClick={myOrders}>My Orders</li>
             </div>
           ) : (
             <div></div>

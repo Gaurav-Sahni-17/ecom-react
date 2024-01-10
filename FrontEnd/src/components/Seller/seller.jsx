@@ -36,6 +36,7 @@ export default function Seller() {
                     }
                     return res.json();
                 }).then((data) => {
+                    console.log(data);
                     setUser({ ...data });
                 }).catch((err) => {
                     navigate("/login");
@@ -51,6 +52,7 @@ export default function Seller() {
         }).then((res) => {
             return res.json();
         }).then((data) => {
+            console.log(data);
             setProducts(data);
         })
     }, [user.username])
@@ -87,13 +89,12 @@ export default function Seller() {
                     if (res.status === 200) {
                         swal.fire({
                             icon: "success",
-                            title: "Item added successfully"
+                            title: "Add request sent"
                         })
 
                     }
                     return res.json();
                 }).then((data) => {
-                        setProducts([...products, data])
                     setData({ name: "", desc: "", quantity: "", price: "", file: null });
                 })
         }
@@ -124,9 +125,15 @@ export default function Seller() {
             })
         })
     }
+    function productRequestStatus(){
+        navigate("/productstatus");
+    }
     function changePassword()
     {
         navigate("/changepass");
+    }
+    function manageOrders(){
+        navigate("/sellerordermanagement")
     }
     return (
         <>
@@ -140,6 +147,8 @@ export default function Seller() {
             <div className={styles.dropdown_content}>
               <li onClick={logoutUser}>Logout</li>
               <li onClick={changePassword}>Change Password</li>
+              <li onClick={productRequestStatus}>Product Requests</li>
+              <li onClick={manageOrders}>Manage Orders</li>
             </div>
           ) : (
             <div></div>

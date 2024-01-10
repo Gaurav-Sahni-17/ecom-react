@@ -1,16 +1,16 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
-import styles from "./admin.module.css"
+import styles from "./manageproduct.module.css"
 import { AiOutlineMenu } from 'react-icons/ai';
 import swal from "sweetalert2"
 import Logout from "../../controllers/logout/logout.js"
-import acceptseller from "../../controllers/seller/acceptseller.js";
-import rejectseller from "../../controllers/seller/rejectseller.js";
-export default function Admin() {
+import acceptproduct from "../../controllers/product/acceptproduct.js";
+import rejectproduct from "../../controllers/product/rejectproduct.js";
+export default function ManageProduct() {
     const [user, setUser] = useState({});
     const [open, setOpen] = useState(false);
-    const [userDetails, setuserDetails] = useState([]);
-    const [sellerRequests, setSellerRequests] = useState([]);
+    const [productDetails, setproductDetails] = useState([]);
+    const [productRequests, setproductRequests] = useState([]);
     const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(!open);
@@ -45,19 +45,21 @@ export default function Admin() {
         }
     }, [])
     useEffect(() => {
-        fetch("http://localhost:3000/getallusers")
+        fetch("http://localhost:3000/getapprovedproducts")
             .then((res) => {
                 return res.json();
             }).then((data) => {
-                setuserDetails([...data]);
+                console.log(data);
+                setproductDetails([...data]);
             })
     }, [user.username])
     useEffect(() => {
-        fetch("http://localhost:3000/getsellerrequests")
+        fetch("http://localhost:3000/getproductrequests")
             .then((res) => {
                 return res.json();
             }).then((data) => {
-                setSellerRequests([...data]);
+                console.log(data);
+                setproductRequests([...data]);
             })
     }, [user.username])
     function logoutUser() {
@@ -73,30 +75,20 @@ export default function Admin() {
     function changePassword() {
         navigate("/changepass");
     }
-    function manageProducts(){
-        navigate("/manageproduct");
+    function goback(){
+        navigate("/admin");
     } 
-    function manageOrders(){
-        navigate("/manageorders");
-    }
     function accept(data) {
         return function (e) {
-            acceptseller(data).then(() => {
+            acceptproduct(data).then(() => {
                 swal.fire({
                     icon: "success",
-                    title: "Seller Accepted Successfully"
+                    title: "Product Accepted Successfully"
                 }).then(() => {
-                    setSellerRequests(sellerRequests.filter((element) => {
+                    setproductRequests(productRequests.filter((element) => {
                         return element.id != data.id;
                     }))
-                    let sellerdata = {
-                        id: data.id,
-                        username: data.username,
-                        email: data.email,
-                        role: "seller",
-                        isverified:1
-                    }
-                    setuserDetails([...userDetails, sellerdata]);
+                    setproductDetails([...productDetails,data]);
                 })
             }).catch((err) => {
                 swal.fire({
@@ -108,12 +100,12 @@ export default function Admin() {
     }
     function reject(id) {
         return function (e) {
-            rejectseller({id:id}).then(() => {
+            rejectproduct({id:id}).then(() => {
                 swal.fire({
                     icon: "success",
-                    title: "Seller Rejected Successfully"
+                    title: "Product Rejected Successfully"
                 }).then(() => {
-                    setSellerRequests(sellerRequests.filter((element) => {
+                    setproductRequests(productRequests.filter((element) => {
                         return element.id != id;
                     }))
                 })
@@ -137,69 +129,68 @@ export default function Admin() {
                         <div className={styles.dropdown_content}>
                             <li onClick={logoutUser}>Logout</li>
                             <li onClick={changePassword}>Change Password</li>
-                            <li onClick={manageProducts}>Manage Products</li>
-                            <li onClick={manageOrders}>Manage Orders</li>
+                            <li onClick={goback}>Go Back</li>
                         </div>
                     ) : (
                         <div></div>
                     )}
                 </div>
             </div>
-            <h2 className={styles.form_head}>Manage Users</h2>
+            <h2 className={styles.form_head}>Manage Products</h2>
             <table className={styles.back}>
-                <caption className={styles.caption} >Seller Requests</caption>
+                <caption className={styles.caption} >Product Requests</caption>
                 <tr className={`${styles.cell} ${styles.height}`}>
-
                     <th className={`${styles.cell} ${styles.height}`}>ID</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Seller ID</th>
                     <th className={`${styles.cell} ${styles.height}`}>Name</th>
-                    <th className={`${styles.cell} ${styles.height}`}>Email</th>
-                    <th className={`${styles.cell} ${styles.height}`}>Aadhar Number</th>
-                    <th className={`${styles.cell} ${styles.height}`}>GST Number</th>
-                    <th className={`${styles.cell} ${styles.height}`}>Brand Name</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Image</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Quantity</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Price</th>
                     <th className={`${styles.cell} ${styles.height}`}>Action</th>
                 </tr>
                 {
-                    sellerRequests.length>0 ?
-                    sellerRequests.map((element) => {
+                    productRequests.length>0 ?
+                    productRequests.map((element) => {
                         return (
                             <tr>
                                 <td className={styles.cell}>{element.id}</td>
-                                <td className={styles.cell}>{element.username}</td>
-                                <td className={styles.cell}>{element.email}</td>
-                                <td className={styles.cell}>{element.aadhar}</td>
-                                <td className={styles.cell}>{element.gst}</td>
-                                <td className={styles.cell}>{element.brand}</td>
-                                <td className={styles.buttonpart}><button onClick={accept(element)}>Accept</button> <button onClick={reject(element.id)}>Reject</button></td>
+                                <td className={styles.cell}>{element.seller_id}</td>
+                                <td className={styles.cell}>{element.name}</td>
+                                <td className={styles.cell}><img src={"http://localhost:3000/"+ element.image}/></td>
+                                <td className={styles.cell}>{element.quantity}</td>
+                                <td className={styles.cell}>{"Rs."+element.price}</td>
+                                <td className={styles.cell}><div className={styles.buttonpart}><button onClick={accept(element)}>Accept</button> <button onClick={reject(element.id)}>Reject</button></div></td>
                             </tr>
                         )
                     }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Seller Requests Found</tr>
+                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Product Requests Found</tr>
                 }
             </table>
             <table className={styles.back2}>
                 <caption className={styles.caption} >Present Users</caption>
                 <tr className={`${styles.cell} ${styles.height}`}>
-
                     <th className={`${styles.cell} ${styles.height}`}>ID</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Seller ID</th>
                     <th className={`${styles.cell} ${styles.height}`}>Name</th>
-                    <th className={`${styles.cell} ${styles.height}`}>Email</th>
-                    <th className={`${styles.cell} ${styles.height}`}>Role</th>
-                    <th className={`${styles.cell} ${styles.height}`}>Is Verified</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Image</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Quantity</th>
+                    <th className={`${styles.cell} ${styles.height}`}>Price</th>
                 </tr>
                 {
-                    userDetails.length>0 ?
-                    userDetails.map((element) => {
+                    productDetails.length>0 ?
+                    productDetails.map((element) => {
                         return (
                             <tr>
                                 <td className={styles.cell}>{element.id}</td>
-                                <td className={styles.cell}>{element.username}</td>
-                                <td className={styles.cell}>{element.email}</td>
-                                <td className={styles.cell}>{element.role}</td>
-                                <td className={styles.cell}>{element.isverified}</td>
+                                <td className={styles.cell}>{element.seller_id}</td>
+                                <td className={styles.cell}>{element.name}</td>
+                                <td className={styles.cell}><img src={"http://localhost:3000/"+ element.image}/></td>
+                                <td className={styles.cell}>{element.quantity}</td>
+                                <td className={styles.cell}>{"Rs."+element.price}</td>
                             </tr>
                         )
                     }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Users Found</tr>
+                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Products Found</tr>
                 }
             </table>
         </>

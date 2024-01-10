@@ -4,7 +4,7 @@ import styles from "./purchaseform.module.css"
 import { AiOutlineMenu } from 'react-icons/ai';
 import swal from "sweetalert2"
 import purchaseCart from "../../controllers/cart/purchasecart";
-export default function Signup() {
+export default function Purchaseform() {
     const navigate = useNavigate();
     const [user, setUser] = useState({});
     const [data, setData] = useState({ firstname: "", lastname: "", pin: "", state: "", country: "", city: "", address: "" })
@@ -74,7 +74,6 @@ export default function Signup() {
                     }
                     purchaseCart(orderdata)
                         .then(() => {
-                            console.log("fgh")
                             swal.fire({
                                 title: "Order placed successfully",
                                 icon: "success"

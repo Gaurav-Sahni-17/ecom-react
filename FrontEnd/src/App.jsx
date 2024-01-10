@@ -13,6 +13,14 @@ import Cart from "./components/Cart/cart"
 import SellerSignUp from "./components/SellerSignUp/sellersignup"
 import Purchaseform from "./components/Purchaseform/purchaseform"
 import Admin from "./components/Admin/admin"
+import ManageProduct from "./components/ManageProduct/manageproduct"
+import ManageOrders from "./components/ManageOrders/manageorders"
+import ProductRequestStatus from "./components/ProductRequestStatus/productrequeststatus"
+import SellerOrderManagement from "./components/SellerOrderManagement/sellerordermanagement"
+import State from "./components/State/state"
+import City from "./components/City/city"
+import MyOrders from "./components/MyOrders/myorders"
+import Access from "./components/Access/access"
 export default function App(){
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -31,6 +39,14 @@ export default function App(){
         <Route path="/sellersignup" element={<SellerSignUp/>}/>
         <Route path="/purchaseform" element={<Purchaseform/>}/>
         <Route path="/admin" element={<Admin/>}/>
+        <Route path="/manageproduct" element={<ManageProduct/>}/>
+        <Route path="/manageorders" element={<ManageOrders/>}/>
+        <Route path="/productstatus" element={<ProductRequestStatus/>}/>
+        <Route path="/sellerordermanagement" element={<SellerOrderManagement/>}/>
+        <Route path="/state" element={<State/>}/>
+        <Route path="/city" element={<City/>}/>
+        <Route path="/myorders" element={<MyOrders/>}/>
+        <Route path="/access" element={<Access/>}/>
         </Route>
         )
       );

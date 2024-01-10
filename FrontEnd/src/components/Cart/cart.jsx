@@ -8,7 +8,7 @@ import Logout from "../../controllers/logout/logout.js"
 import getcartproducts from "../../controllers/cart/getcartproducts.js";
 
 
-export default function Product() {
+export default function Cart() {
     let noofproducts = 0, totalprice = 0;
     let count=0;
     const [user, setUser] = useState({});

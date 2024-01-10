@@ -2,7 +2,7 @@ import { Link,useNavigate } from "react-router-dom"
 import { useState } from "react"
 import  styles from "./forgot.module.css"
 import forgot from "../../controllers/password/forgot.js";
-export default function changePassword(){
+export default function Forgot(){
     const [data,setData]=useState({email:""})
     const [error,setError]=useState("");
     const navigate=useNavigate();

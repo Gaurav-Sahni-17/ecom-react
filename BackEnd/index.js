@@ -1,108 +1,123 @@
-const express=require('express');
-const session=require('express-session');
-const multer=require('multer');
-const cors=require('cors');
-const jwt=require('jsonwebtoken');
-const upload=multer({dest:"uploads"})
-const db=require("./dbmethods/db.js")
-const postsignup = require('./controllers/postsignup.js');
-const postlogin = require('./controllers/postlogin.js');
-const verifymail = require('./controllers/verifymail.js');
-const checkuser = require('./controllers/checkuser.js');
-const postaddproduct = require('./controllers/postaddproduct.js');
-const postgetallproductsofseller = require('./controllers/postgetallproductsofseller.js');
-const postupdateproduct = require('./controllers/postupdateproduct.js');
-const postdeleteproduct = require('./controllers/postdeleteproduct.js');
-const postgetfiveproducts = require('./controllers/postgetfiveproducts.js');
-const postchangepass = require('./controllers/postchangepass.js');
-const postforgot = require('./controllers/postforgot.js');
-const postaddtocart = require('./controllers/postaddtocart.js');
-const postgetcartproducts = require('./controllers/postgetcartproducts');
-const postremovefromcart = require('./controllers/postremovefromcart.js');
-const postincrease = require('./controllers/postincrease.js');
-const postdecrease = require('./controllers/postdecrease.js');
-const postsellersignup = require('./controllers/postsellersignup.js');
-const postpurchasecart = require('./controllers/postpurchasecart.js');
-const getallusers = require('./controllers/getallusers.js');
-const getsellerrequests = require('./controllers/getsellerrequests.js');
-const postrejectseller = require('./controllers/postrejectseller.js');
-const postacceptseller = require('./controllers/postacceptseller.js');
-const app=express();
+const express = require('express');
+const multer = require('multer');
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const upload = multer({ dest: "uploads" })
+const db = require("./dbmethods/db.js")
+const {postchangepass,postforgot}=require("./controllers/passwordmanagement.js");
+const {postdispatchbycity,postdispatchbyseller,postdispatchbystate,postdispatchedorders,postdispatchordersofcity,postdispatchordersofseller,postdispatchordersofstate,postupcomingorders,cancelorder}=require("./controllers/ordermanagement.js")
+const {getallorders,postacceptorder,postallordersofuser}=require("./controllers/order.js");
+const { postaddtocart, postdecrease, postincrease, postpurchasecart, postremovefromcart }=require("./controllers/cart.js");
+const {getsellerrequests,postacceptseller,postrejectseller}=require("./controllers/seller.js");
+const { getallusers, postsignup, postsellersignup, postlogin } = require("./controllers/user.js");
+const { getapprovedproducts, getproductrequests, postacceptproduct, postaddproduct, postdeleteproduct, postgetallproductsofseller, postgetcartproducts, postgetfiveproducts, postpendingproductsofseller, postrejectedproductsofseller, postrejectproduct, postupdateproduct } = require('./controllers/product.js');
+const {verifymail,verifyorder,checkuser}=require("./controllers/verification.js")
+const app = express();
 app.use(express.json())
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static("uploads/"));
-app.set('view engine','ejs');
-app.use((session({
-    secret:"keyboard cat",
-    resave:false,
-    saveUninitialized:true,
-})))
-const verifyJWT=(req,res,next)=>{
-    const token=req.headers['token'];
-        jwt.verify(token,"jwtSecret",(err,decoded)=>{
-            if(err)
-            {
-                return res.status(401).json({ auth: false, message: 'Invalid token' });
-            }
-            else{
-                req.userId=decoded.id;
-                next();
-            } 
-        })
-    }
+const verifyJWT = (req, res, next) => {
+    const token = req.headers['token'];
+    jwt.verify(token, "jwtSecret", (err, decoded) => {
+        if (err) {
+            return res.status(401).json({ auth: false, message: 'Invalid token' });
+        }
+        else {
+            req.userId = decoded.id;
+            next();
+        }
+    })
+}
 
-app.post("/signup",postsignup);
+app.post("/signup", postsignup);
 
-app.post("/login",postlogin);
+app.post("/login", postlogin);
 
-app.get("/checkuser",verifyJWT,checkuser);
+app.get("/checkuser", verifyJWT, checkuser);
 
-app.get("/verifymail/:token",verifymail);
+app.get("/verifymail/:token", verifymail);
 
-app.post("/addproduct",upload.single('file'),postaddproduct);
+app.get("/verifyorder/:token", verifyorder);
 
-app.post("/getallproductsofseller",postgetallproductsofseller);
+app.post("/addproduct", upload.single('file'), postaddproduct);
 
-app.post("/updateproduct",postupdateproduct);
+app.post("/getallproductsofseller", postgetallproductsofseller);
 
-app.post("/deleteproduct",postdeleteproduct);
+app.post("/updateproduct", postupdateproduct);
 
-app.post("/getfiveproducts",postgetfiveproducts);
+app.post("/deleteproduct", postdeleteproduct);
 
-app.post("/changepass",verifyJWT,postchangepass);
+app.post("/getfiveproducts", postgetfiveproducts);
 
-app.post("/forgot",postforgot);
+app.post("/changepass", verifyJWT, postchangepass);
 
-app.post("/addtocart",verifyJWT,postaddtocart);
+app.post("/forgot", postforgot);
 
-app.post("/getcartproducts",postgetcartproducts);
+app.post("/addtocart", verifyJWT, postaddtocart);
 
-app.post("/removefromcart",verifyJWT,postremovefromcart);
+app.post("/getcartproducts", postgetcartproducts);
 
-app.post("/increase",verifyJWT,postincrease);
+app.post("/removefromcart", verifyJWT, postremovefromcart);
 
-app.post("/decrease",verifyJWT,postdecrease);
+app.post("/increase", verifyJWT, postincrease);
 
-app.post("/sellersignup",postsellersignup);
+app.post("/decrease", verifyJWT, postdecrease);
 
-app.post("/purchasecart",postpurchasecart);
+app.post("/sellersignup", postsellersignup);
 
-app.get("/getallusers",getallusers);
+app.post("/purchasecart", postpurchasecart);
 
-app.get("/getsellerrequests",getsellerrequests);
+app.get("/getallusers", getallusers);
 
-app.post("/rejectseller",postrejectseller)
+app.get("/getsellerrequests", getsellerrequests);
 
-app.post("/acceptseller",postacceptseller)
+app.post("/rejectseller", postrejectseller)
 
-db.connect((err)=>{
-    if(err)
-    {
-    throw err;
+app.post("/acceptseller", postacceptseller)
+
+app.get("/getapprovedproducts", getapprovedproducts);
+
+app.get("/getproductrequests", getproductrequests);
+
+app.post("/acceptproduct", postacceptproduct);
+
+app.post("/rejectproduct", postrejectproduct);
+
+app.get("/getallorders", getallorders);
+
+app.post("/pendingproductsofseller", postpendingproductsofseller);
+
+app.post("/rejectedproductsofseller", postrejectedproductsofseller);
+
+app.post("/dispatchordersofseller", postdispatchordersofseller);
+
+app.post("/dispatchedorders", postdispatchedorders);
+
+app.post("/dispatchbyseller", postdispatchbyseller);
+
+app.post("/dispatchordersofstate", postdispatchordersofstate);
+
+app.post("/upcomingorders", postupcomingorders);
+
+app.post("/acceptorder", postacceptorder);
+
+app.post("/dispatchbystate", postdispatchbystate);
+
+app.post("/dispatchordersofcity", postdispatchordersofcity);
+
+app.post("/dispatchbycity", postdispatchbycity);
+
+app.post("/allordersofuser", postallordersofuser);
+
+app.post("/cancelorder", cancelorder);
+
+db.connect((err) => {
+    if (err) {
+        throw err;
     }
     console.log("db connected");
-    app.listen(3000,()=>{
+    app.listen(3000, () => {
         console.log("Listening at port 3000");
     })
 })

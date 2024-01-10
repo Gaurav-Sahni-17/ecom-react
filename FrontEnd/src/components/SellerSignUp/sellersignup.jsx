@@ -3,7 +3,7 @@ import { useState } from "react"
 import  styles from "./sellersignup.module.css"
 import swal from "sweetalert2"
 import sellersignup from "../../controllers/seller/sellersignup"
-export default function Signup(){
+export default function SellerSignup(){
     const navigate=useNavigate();
     const [data,setData]=useState({username:"",password:"",email:"",gst:"",aadhar:"",brand:""})
     const [error,setError]=useState("");

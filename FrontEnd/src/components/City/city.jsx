@@ -55,7 +55,6 @@ export default function City() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setOrdersToDispatch([...data]);
                 })
         }
@@ -70,7 +69,6 @@ export default function City() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setdispatchedOrders([...data]);
                 })
         }
@@ -85,7 +83,6 @@ export default function City() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setupcomingOrders([...data]);
                 })
         }
@@ -108,7 +105,7 @@ export default function City() {
     }
     function dispatch(element) {
         return function () {
-            dispatchByCity({ id: element.order_id,dispatcher_id: user.id,email:element.email}).then(() => {
+            dispatchByCity({ id: element.order_id, dispatcher_id: user.id, email: element.email }).then(() => {
                 swal.fire({
                     title: "Order Dispatched successfully",
                     icon: "success"

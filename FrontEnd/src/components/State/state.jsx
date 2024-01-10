@@ -55,7 +55,6 @@ export default function State() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setOrdersToDispatch([...data]);
                 })
         }
@@ -70,7 +69,7 @@ export default function State() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
+
                     setdispatchedOrders([...data]);
                 })
         }
@@ -85,7 +84,7 @@ export default function State() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
+
                     setupcomingOrders([...data]);
                 })
         }
@@ -126,17 +125,17 @@ export default function State() {
             })
         }
     }
-    function accept(element){
-        return function(){
-            acceptOrder({id:element.order_id,status:"Arrived State Terminal"}).then(()=>{
+    function accept(element) {
+        return function () {
+            acceptOrder({ id: element.order_id, status: "Arrived State Terminal" }).then(() => {
                 swal.fire({
-                    title:"Accepted Successfully",
-                    icon:"success"
-                }).then(()=>{
-                    setupcomingOrders(upcomingOrders.filter((data)=>{
-                        return element.order_id!=data.order_id;
+                    title: "Accepted Successfully",
+                    icon: "success"
+                }).then(() => {
+                    setupcomingOrders(upcomingOrders.filter((data) => {
+                        return element.order_id != data.order_id;
                     }))
-                    setOrdersToDispatch([...OrdersToDispatch,element]);
+                    setOrdersToDispatch([...OrdersToDispatch, element]);
                 })
             })
         }

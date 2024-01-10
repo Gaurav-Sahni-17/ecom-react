@@ -3,11 +3,13 @@
     text-align: center;
     background-color: #f0f0f0;
 }
-.outer{
-    height:100vh;
+
+.outer {
+    height: 100vh;
     display: flex;
     align-items: center;
 }
+
 .container {
     width: 400px;
     margin: auto;

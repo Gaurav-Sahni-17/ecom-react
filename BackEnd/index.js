@@ -4,14 +4,14 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const upload = multer({ dest: "uploads" })
 const db = require("./dbmethods/db.js")
-const {postchangepass,postforgot}=require("./controllers/passwordmanagement.js");
-const {postdispatchbycity,postdispatchbyseller,postdispatchbystate,postdispatchedorders,postdispatchordersofcity,postdispatchordersofseller,postdispatchordersofstate,postupcomingorders,cancelorder}=require("./controllers/ordermanagement.js")
-const {getallorders,postacceptorder,postallordersofuser}=require("./controllers/order.js");
-const { postaddtocart, postdecrease, postincrease, postpurchasecart, postremovefromcart }=require("./controllers/cart.js");
-const {getsellerrequests,postacceptseller,postrejectseller}=require("./controllers/seller.js");
+const { postchangepass, postforgot } = require("./controllers/passwordmanagement.js");
+const { postdispatchbycity, postdispatchbyseller, postdispatchbystate, postdispatchedorders, postdispatchordersofcity, postdispatchordersofseller, postdispatchordersofstate, postupcomingorders, cancelorder } = require("./controllers/ordermanagement.js")
+const { getallorders, postacceptorder, postallordersofuser } = require("./controllers/order.js");
+const { postaddtocart, postdecrease, postincrease, postpurchasecart, postremovefromcart } = require("./controllers/cart.js");
+const { getsellerrequests, postacceptseller, postrejectseller } = require("./controllers/seller.js");
 const { getallusers, postsignup, postsellersignup, postlogin } = require("./controllers/user.js");
 const { getapprovedproducts, getproductrequests, postacceptproduct, postaddproduct, postdeleteproduct, postgetallproductsofseller, postgetcartproducts, postgetfiveproducts, postpendingproductsofseller, postrejectedproductsofseller, postrejectproduct, postupdateproduct } = require('./controllers/product.js');
-const {verifymail,verifyorder,checkuser}=require("./controllers/verification.js")
+const { verifymail, verifyorder, checkuser } = require("./controllers/verification.js")
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));

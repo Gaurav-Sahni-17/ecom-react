@@ -10,7 +10,7 @@ import getcartproducts from "../../controllers/cart/getcartproducts.js";
 
 export default function Cart() {
     let noofproducts = 0, totalprice = 0;
-    let count=0;
+    let count = 0;
     const [user, setUser] = useState({});
     const [products, setProducts] = useState([]);
     const [open, setOpen] = useState(false);
@@ -67,7 +67,6 @@ export default function Cart() {
                         setProducts([...data]);
                     }
                 }).catch((err) => {
-                    console.log(err);
                     swal.fire({
                         icon: "error",
                         title: err
@@ -117,26 +116,26 @@ export default function Cart() {
         navigate("/product");
     }
     function purchase() {
-        if(products.length===0){
+        if (products.length === 0) {
             swal.fire({
-                title:"Cart is empty",
-                icon:"warning"
-            }).then(()=>{
+                title: "Cart is empty",
+                icon: "warning"
+            }).then(() => {
                 navigate("/product");
             })
         }
-        else{
-        if(count==0){
-            navigate("/purchaseform");
+        else {
+            if (count == 0) {
+                navigate("/purchaseform");
+            }
+            else {
+                swal.fire({
+                    title: "Out of Stock Item Present",
+                    icon: "warning",
+                    text: "Please remove out of stock item before continue"
+                })
+            }
         }
-        else{
-            swal.fire({
-                title:"Out of Stock Item Present",
-                icon:"warning",
-                text:"Please remove out of stock item before continue"
-            })
-        }
-    }
     }
     return (
         <>
@@ -160,12 +159,12 @@ export default function Cart() {
             <h2 className={styles.form_head}>My Cart</h2>
             <div className={styles.productContainer}>
                 {products.map((product) => {
-                    if(product.quantity>product.stock){
+                    if (product.quantity > product.stock) {
                         count++;
                     }
-                    else{
-                    noofproducts = noofproducts + product.quantity;
-                    totalprice = totalprice + (product.quantity * product.price);
+                    else {
+                        noofproducts = noofproducts + product.quantity;
+                        totalprice = totalprice + (product.quantity * product.price);
                     }
                     return <Create data={product} removeItem={remove} increase={increase} decrease={decrease} />
                 })

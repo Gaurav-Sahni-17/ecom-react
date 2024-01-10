@@ -46,7 +46,6 @@ export default function ManageOrders() {
             .then((res) => {
                 return res.json();
             }).then((data) => {
-                console.log(data);
                 setorderDetails([...data]);
             })
     }, [user.username])
@@ -63,9 +62,9 @@ export default function ManageOrders() {
     function changePassword() {
         navigate("/changepass");
     }
-    function goback(){
+    function goback() {
         navigate("/admin");
-    } 
+    }
     return (
         <>
             <div className={styles.head}>
@@ -98,21 +97,21 @@ export default function ManageOrders() {
                     <th className={`${styles.cell} ${styles.height}`}>Status</th>
                 </tr>
                 {
-                    orderDetails.length>0 ?
-                    orderDetails.map((element) => {
-                        return (
-                            <tr>
-                                <td className={styles.cell}>{element.order_id}</td>
-                                <td className={styles.cell}>{element.product_id}</td>
-                                <td className={styles.cell}>{element.seller_id}</td>
-                                <td className={styles.cell}>{element.productname}</td>
-                                <td className={styles.cell}>{element.email}</td>
-                                <td className={styles.cell}>{element.quantity}</td>
-                                <td className={styles.cell}>{element.status}</td>
-                            </tr>
-                        )
-                    }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Orders Found</tr>
+                    orderDetails.length > 0 ?
+                        orderDetails.map((element) => {
+                            return (
+                                <tr>
+                                    <td className={styles.cell}>{element.order_id}</td>
+                                    <td className={styles.cell}>{element.product_id}</td>
+                                    <td className={styles.cell}>{element.seller_id}</td>
+                                    <td className={styles.cell}>{element.productname}</td>
+                                    <td className={styles.cell}>{element.email}</td>
+                                    <td className={styles.cell}>{element.quantity}</td>
+                                    <td className={styles.cell}>{element.status}</td>
+                                </tr>
+                            )
+                        }) :
+                        <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Orders Found</tr>
                 }
             </table>
         </>

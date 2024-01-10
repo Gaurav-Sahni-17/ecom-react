@@ -1,6 +1,6 @@
-export default  function logout(){ 
-    return new Promise((resolve,reject)=>{
-       localStorage.removeItem("token")
-       resolve();
-   })
+export default function logout() {
+    return new Promise((resolve, reject) => {
+        localStorage.removeItem("token")
+        resolve();
+    })
 }

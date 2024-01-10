@@ -2,7 +2,7 @@ import styles from "./seller.module.css"
 import updateproduct from "../../controllers/product/updateproduct"
 import swal from "sweetalert2"
 import deleteproduct from "../../controllers/product/deleteproduct"
-export default function Create({ data, deletefun,updatefun }) {
+export default function Create({ data, deletefun, updatefun }) {
     const update = () => {
         updateproduct(data).then(() => {
             swal.fire({
@@ -17,9 +17,9 @@ export default function Create({ data, deletefun,updatefun }) {
         })
     }
     function changeData(val) {
-        return function(e){
-            data[val]=e.target.value;
-            updatefun({key:val,value:e.target.value,id:data.id});
+        return function (e) {
+            data[val] = e.target.value;
+            updatefun({ key: val, value: e.target.value, id: data.id });
         }
     }
     const deleteProduct = () => {

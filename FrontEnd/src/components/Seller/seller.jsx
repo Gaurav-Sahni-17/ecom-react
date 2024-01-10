@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { AiOutlineMenu } from 'react-icons/ai'; 
+import { AiOutlineMenu } from 'react-icons/ai';
 import swal from "sweetalert2"
 import styles from "./seller.module.css"
 import Create from "./create.jsx"
@@ -13,7 +13,7 @@ export default function Seller() {
     const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(!open);
-      };
+    };
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -36,7 +36,6 @@ export default function Seller() {
                     }
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setUser({ ...data });
                 }).catch((err) => {
                     navigate("/login");
@@ -52,7 +51,6 @@ export default function Seller() {
         }).then((res) => {
             return res.json();
         }).then((data) => {
-            console.log(data);
             setProducts(data);
         })
     }, [user.username])
@@ -125,35 +123,34 @@ export default function Seller() {
             })
         })
     }
-    function productRequestStatus(){
+    function productRequestStatus() {
         navigate("/productstatus");
     }
-    function changePassword()
-    {
+    function changePassword() {
         navigate("/changepass");
     }
-    function manageOrders(){
+    function manageOrders() {
         navigate("/sellerordermanagement")
     }
     return (
         <>
             <div className={styles.head}>
                 <h1 className={styles.heading}>Welcome {user.username}</h1>
-              <div className={styles.dropdown}>
-          <button onClick={handleOpen} className={styles.dropbtn}>
-            <AiOutlineMenu />
-          </button>
-          {open ? (
-            <div className={styles.dropdown_content}>
-              <li onClick={logoutUser}>Logout</li>
-              <li onClick={changePassword}>Change Password</li>
-              <li onClick={productRequestStatus}>Product Requests</li>
-              <li onClick={manageOrders}>Manage Orders</li>
-            </div>
-          ) : (
-            <div></div>
-          )}
-          </div>
+                <div className={styles.dropdown}>
+                    <button onClick={handleOpen} className={styles.dropbtn}>
+                        <AiOutlineMenu />
+                    </button>
+                    {open ? (
+                        <div className={styles.dropdown_content}>
+                            <li onClick={logoutUser}>Logout</li>
+                            <li onClick={changePassword}>Change Password</li>
+                            <li onClick={productRequestStatus}>Product Requests</li>
+                            <li onClick={manageOrders}>Manage Orders</li>
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
+                </div>
             </div>
             <h2 className={styles.form_head}>Add products</h2>
             <div className={styles.form}>

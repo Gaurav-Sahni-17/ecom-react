@@ -53,23 +53,24 @@
 
 .cell {
     border: 1px solid rgb(144, 222, 245);
-    padding:5px;
-    text-align:center;
-}
-.buttonpart {
-    border: 1px solid rgb(144, 222, 245);
-    padding:5px;
-    display:flex;
-    justify-content:space-between;
+    padding: 5px;
+    text-align: center;
 }
 
-.buttonpart button{
-    border:none;
-    color:white;
-    background-color:rgb(36, 128, 241);
+.buttonpart {
+    border: 1px solid rgb(144, 222, 245);
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonpart button {
+    border: none;
+    color: white;
+    background-color: rgb(36, 128, 241);
     cursor: pointer;
-    padding:5px;
-    border-radius:10px;
+    padding: 5px;
+    border-radius: 10px;
 }
 
 .height {
@@ -91,10 +92,11 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-collapse: collapse;
 }
+
 .back2 {
     background-color: white;
     width: 80%;
-    margin-top:20px;
+    margin-top: 20px;
     margin-left: 170px;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

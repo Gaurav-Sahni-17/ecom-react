@@ -73,10 +73,10 @@ export default function Admin() {
     function changePassword() {
         navigate("/changepass");
     }
-    function manageProducts(){
+    function manageProducts() {
         navigate("/manageproduct");
-    } 
-    function manageOrders(){
+    }
+    function manageOrders() {
         navigate("/manageorders");
     }
     function accept(data) {
@@ -94,7 +94,7 @@ export default function Admin() {
                         username: data.username,
                         email: data.email,
                         role: "seller",
-                        isverified:1
+                        isverified: 1
                     }
                     setuserDetails([...userDetails, sellerdata]);
                 })
@@ -108,7 +108,7 @@ export default function Admin() {
     }
     function reject(id) {
         return function (e) {
-            rejectseller({id:id}).then(() => {
+            rejectseller({ id: id }).then(() => {
                 swal.fire({
                     icon: "success",
                     title: "Seller Rejected Successfully"
@@ -159,21 +159,21 @@ export default function Admin() {
                     <th className={`${styles.cell} ${styles.height}`}>Action</th>
                 </tr>
                 {
-                    sellerRequests.length>0 ?
-                    sellerRequests.map((element) => {
-                        return (
-                            <tr>
-                                <td className={styles.cell}>{element.id}</td>
-                                <td className={styles.cell}>{element.username}</td>
-                                <td className={styles.cell}>{element.email}</td>
-                                <td className={styles.cell}>{element.aadhar}</td>
-                                <td className={styles.cell}>{element.gst}</td>
-                                <td className={styles.cell}>{element.brand}</td>
-                                <td className={styles.buttonpart}><button onClick={accept(element)}>Accept</button> <button onClick={reject(element.id)}>Reject</button></td>
-                            </tr>
-                        )
-                    }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Seller Requests Found</tr>
+                    sellerRequests.length > 0 ?
+                        sellerRequests.map((element) => {
+                            return (
+                                <tr>
+                                    <td className={styles.cell}>{element.id}</td>
+                                    <td className={styles.cell}>{element.username}</td>
+                                    <td className={styles.cell}>{element.email}</td>
+                                    <td className={styles.cell}>{element.aadhar}</td>
+                                    <td className={styles.cell}>{element.gst}</td>
+                                    <td className={styles.cell}>{element.brand}</td>
+                                    <td className={styles.buttonpart}><button onClick={accept(element)}>Accept</button> <button onClick={reject(element.id)}>Reject</button></td>
+                                </tr>
+                            )
+                        }) :
+                        <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Seller Requests Found</tr>
                 }
             </table>
             <table className={styles.back2}>
@@ -187,19 +187,19 @@ export default function Admin() {
                     <th className={`${styles.cell} ${styles.height}`}>Is Verified</th>
                 </tr>
                 {
-                    userDetails.length>0 ?
-                    userDetails.map((element) => {
-                        return (
-                            <tr>
-                                <td className={styles.cell}>{element.id}</td>
-                                <td className={styles.cell}>{element.username}</td>
-                                <td className={styles.cell}>{element.email}</td>
-                                <td className={styles.cell}>{element.role}</td>
-                                <td className={styles.cell}>{element.isverified}</td>
-                            </tr>
-                        )
-                    }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Users Found</tr>
+                    userDetails.length > 0 ?
+                        userDetails.map((element) => {
+                            return (
+                                <tr>
+                                    <td className={styles.cell}>{element.id}</td>
+                                    <td className={styles.cell}>{element.username}</td>
+                                    <td className={styles.cell}>{element.email}</td>
+                                    <td className={styles.cell}>{element.role}</td>
+                                    <td className={styles.cell}>{element.isverified}</td>
+                                </tr>
+                            )
+                        }) :
+                        <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Users Found</tr>
                 }
             </table>
         </>

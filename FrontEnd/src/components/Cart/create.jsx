@@ -82,17 +82,16 @@ export default function Create({ data, removeItem, increase, decrease }) {
                         <p>{"Rs. " + data.price}</p>
                     </div>
                     <div className={styles.cardelement}>
-                        {console.log(data.quantity,data.stock)}
                         {data.quantity <= data.stock ?
                             <>
                                 <p>Quantity: </p>
                                 <p>{data.quantity}</p>
-                        <div className={styles.quantity_buttons}>
-                            <button onClick={decreaseQuantity}>-</button>
-                            <button onClick={increaseQuantity}>+</button>
-                        </div>
+                                <div className={styles.quantity_buttons}>
+                                    <button onClick={decreaseQuantity}>-</button>
+                                    <button onClick={increaseQuantity}>+</button>
+                                </div>
                             </> :
-                            <p style={{"color":"red"}}>Out of stock</p>
+                            <p style={{ "color": "red" }}>Out of stock</p>
                         }
                     </div>
                 </div>

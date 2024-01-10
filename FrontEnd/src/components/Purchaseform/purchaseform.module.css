@@ -8,18 +8,21 @@
     align-items: center;
     height: auto;
 }
-.p{
-color:red;
-margin-top:5px;
+
+.p {
+    color: red;
+    margin-top: 5px;
 }
+
 .container {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 300px;
-    margin-top:20px;
+    margin-top: 20px;
 }
+
 .head {
     padding: 1.5%;
     display: flex;
@@ -33,49 +36,60 @@ margin-top:5px;
     font-size: 2.5 rem;
     text-decoration: underline;
 }
+
 .container h2 {
     text-align: center;
     color: #333;
 }
+
 .formgroup {
     margin-bottom: 20px;
 }
+
 .formgroup label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
 }
-.form{
-    margin-top:20px;
+
+.form {
+    margin-top: 20px;
     height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 }
-.formgroup input,select{
+
+.formgroup input,
+select {
     width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-.formgroup select{
-    cursor:pointer;
+
+.formgroup select {
+    cursor: pointer;
 }
-#show{
-     cursor:pointer;
+
+#show {
+    cursor: pointer;
 }
+
 .btncontainer {
     text-align: center;
 }
+
 .btncontainer button {
     padding: 10px 20px;
-    margin-top:10px;
+    margin-top: 10px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
+
 .dropdown {
     display: inline-block;
     margin-right: 8%;

@@ -35,7 +35,6 @@ export default function ProductRequestStatus() {
                     }
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setUser({ ...data });
                 }).catch((err) => {
                     navigate("/login");
@@ -53,7 +52,6 @@ export default function ProductRequestStatus() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setpendingProducts([...data]);
                 })
         }
@@ -68,7 +66,6 @@ export default function ProductRequestStatus() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setrejectedProducts([...data]);
                 })
         }
@@ -129,7 +126,7 @@ export default function ProductRequestStatus() {
                                     <td className={styles.cell}>{element.name}</td>
                                     <td className={styles.cell}><img src={"http://localhost:3000/" + element.image} /></td>
                                     <td className={styles.cell}>{element.quantity}</td>
-                                    <td className={styles.cell}>{"Rs."+element.price}</td>
+                                    <td className={styles.cell}>{"Rs." + element.price}</td>
                                 </tr>
                             )
                         }) :
@@ -156,7 +153,7 @@ export default function ProductRequestStatus() {
                                     <td className={styles.cell}>{element.name}</td>
                                     <td className={styles.cell}><img src={"http://localhost:3000/" + element.image} /></td>
                                     <td className={styles.cell}>{element.quantity}</td>
-                                    <td className={styles.cell}>{"Rs."+element.price}</td>
+                                    <td className={styles.cell}>{"Rs." + element.price}</td>
                                 </tr>
                             )
                         }) :

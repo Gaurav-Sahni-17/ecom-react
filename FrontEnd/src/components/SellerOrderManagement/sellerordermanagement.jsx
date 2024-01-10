@@ -9,7 +9,7 @@ export default function SellerOrderManagement() {
     const [user, setUser] = useState({});
     const [open, setOpen] = useState(false);
     const [dispatchedOrders, setdispatchedOrders] = useState([]);
-    const [OrdersToDispatch ,setOrdersToDispatch]=useState([]);
+    const [OrdersToDispatch, setOrdersToDispatch] = useState([]);
     const navigate = useNavigate();
     const handleOpen = () => {
         setOpen(!open);
@@ -44,33 +44,31 @@ export default function SellerOrderManagement() {
         }
     }, [])
     useEffect(() => {
-        if(user.username){
-        fetch("http://localhost:3000/dispatchordersofseller",{
-            method:"POST",
-            headers:{"content-type":"application/json"},
-            body:JSON.stringify({id:user.id})
-        })
-            .then((res) => {
-                return res.json();
-            }).then((data) => {
-                console.log(data);
-                setOrdersToDispatch([...data]);
+        if (user.username) {
+            fetch("http://localhost:3000/dispatchordersofseller", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ id: user.id })
             })
+                .then((res) => {
+                    return res.json();
+                }).then((data) => {
+                    setOrdersToDispatch([...data]);
+                })
         }
     }, [user.username])
     useEffect(() => {
-        if(user.username){
-        fetch("http://localhost:3000/dispatchedorders",{
-            method:"POST",
-            headers:{"content-type":"application/json"},
-            body:JSON.stringify({id:user.id})
-        })
-            .then((res) => {
-                return res.json();
-            }).then((data) => {
-                console.log(data);
-                setdispatchedOrders([...data]);
+        if (user.username) {
+            fetch("http://localhost:3000/dispatchedorders", {
+                method: "POST",
+                headers: { "content-type": "application/json" },
+                body: JSON.stringify({ id: user.id })
             })
+                .then((res) => {
+                    return res.json();
+                }).then((data) => {
+                    setdispatchedOrders([...data]);
+                })
         }
     }, [user.username])
     function logoutUser() {
@@ -86,27 +84,27 @@ export default function SellerOrderManagement() {
     function changePassword() {
         navigate("/changepass");
     }
-    function goback(){
+    function goback() {
         navigate("/seller");
-    } 
-    function dispatch(element){
-        return function(){
-        dispatchBySeller({id:element.order_id,seller:element.seller_id,state:element.state}).then(()=>{
-            swal.fire({
-                title:"Order Dispatched successfully",
-                icon:"success"
-            }).then(()=>{
-                setOrdersToDispatch(OrdersToDispatch.filter((data)=>{
-                    return element.order_id!=data.order_id;
-                }))
-                setdispatchedOrders([...dispatchedOrders,element]);
+    }
+    function dispatch(element) {
+        return function () {
+            dispatchBySeller({ id: element.order_id, seller: element.seller_id, state: element.state }).then(() => {
+                swal.fire({
+                    title: "Order Dispatched successfully",
+                    icon: "success"
+                }).then(() => {
+                    setOrdersToDispatch(OrdersToDispatch.filter((data) => {
+                        return element.order_id != data.order_id;
+                    }))
+                    setdispatchedOrders([...dispatchedOrders, element]);
+                })
+            }).catch((err) => {
+                swal.fire({
+                    title: err,
+                    icon: "error"
+                })
             })
-        }).catch((err)=>{
-            swal.fire({
-                title:err,
-                icon:"error"
-            })
-        })
         }
     }
     return (
@@ -142,22 +140,22 @@ export default function SellerOrderManagement() {
                     <th className={`${styles.cell} ${styles.height}`}>Action</th>
                 </tr>
                 {
-                    OrdersToDispatch.length>0 ?
-                    OrdersToDispatch.map((element) => {
-                        return (
-                            <tr>
-                                <td className={styles.cell}>{element.order_id}</td>
-                                <td className={styles.cell}>{element.product_id}</td>
-                                {/* <td className={styles.cell}>{element.seller_id}</td> */}
-                                <td className={styles.cell}>{element.productname}</td>
-                                <td className={styles.cell}>{element.email}</td>
-                                <td className={styles.cell}>{element.quantity}</td>
-                                <td className={styles.cell}>{element.state}</td>
-                                <td className={styles.cell}><button onClick={dispatch(element)}>Dispatch</button></td>
-                            </tr>
-                        )
-                    }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Orders to Dispatch</tr>
+                    OrdersToDispatch.length > 0 ?
+                        OrdersToDispatch.map((element) => {
+                            return (
+                                <tr>
+                                    <td className={styles.cell}>{element.order_id}</td>
+                                    <td className={styles.cell}>{element.product_id}</td>
+                                    {/* <td className={styles.cell}>{element.seller_id}</td> */}
+                                    <td className={styles.cell}>{element.productname}</td>
+                                    <td className={styles.cell}>{element.email}</td>
+                                    <td className={styles.cell}>{element.quantity}</td>
+                                    <td className={styles.cell}>{element.state}</td>
+                                    <td className={styles.cell}><button onClick={dispatch(element)}>Dispatch</button></td>
+                                </tr>
+                            )
+                        }) :
+                        <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Orders to Dispatch</tr>
                 }
             </table>
             <table className={styles.back2}>
@@ -172,21 +170,21 @@ export default function SellerOrderManagement() {
                     <th className={`${styles.cell} ${styles.height}`}>State</th>
                 </tr>
                 {
-                    dispatchedOrders.length>0 ?
-                    dispatchedOrders.map((element) => {
-                        return (
-                            <tr>
-                                <td className={styles.cell}>{element.order_id}</td>
-                                <td className={styles.cell}>{element.product_id}</td>
-                                {/* <td className={styles.cell}>{element.seller_id}</td> */}
-                                <td className={styles.cell}>{element.productname}</td>
-                                <td className={styles.cell}>{element.email}</td>
-                                <td className={styles.cell}>{element.quantity}</td>
-                                <td className={styles.cell}>{element.state}</td>
-                            </tr>
-                        )
-                    }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Orders Dispatched</tr>
+                    dispatchedOrders.length > 0 ?
+                        dispatchedOrders.map((element) => {
+                            return (
+                                <tr>
+                                    <td className={styles.cell}>{element.order_id}</td>
+                                    <td className={styles.cell}>{element.product_id}</td>
+                                    {/* <td className={styles.cell}>{element.seller_id}</td> */}
+                                    <td className={styles.cell}>{element.productname}</td>
+                                    <td className={styles.cell}>{element.email}</td>
+                                    <td className={styles.cell}>{element.quantity}</td>
+                                    <td className={styles.cell}>{element.state}</td>
+                                </tr>
+                            )
+                        }) :
+                        <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Orders Dispatched</tr>
                 }
             </table>
         </>

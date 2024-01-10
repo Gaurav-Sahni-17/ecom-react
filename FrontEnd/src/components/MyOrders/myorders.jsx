@@ -54,7 +54,6 @@ export default function MyOrders() {
                 .then((res) => {
                     return res.json();
                 }).then((data) => {
-                    console.log(data);
                     setcancelledOrders(data.filter((element) => {
                         return element.status === "Cancelled";
                     }));
@@ -95,7 +94,7 @@ export default function MyOrders() {
                 cancelButtonText: "No",
             }).then(function (result) {
                 if (result.isConfirmed) {
-                    cancelOrder({ id: element.order_id ,quantity:element.quantity,productid:element.product_id}).then(() => {
+                    cancelOrder({ id: element.order_id, quantity: element.quantity, productid: element.product_id }).then(() => {
                         swal.fire({
                             title: "Order Cancelled successfully",
                             icon: "success"

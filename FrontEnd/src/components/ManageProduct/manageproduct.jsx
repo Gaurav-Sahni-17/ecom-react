@@ -49,7 +49,6 @@ export default function ManageProduct() {
             .then((res) => {
                 return res.json();
             }).then((data) => {
-                console.log(data);
                 setproductDetails([...data]);
             })
     }, [user.username])
@@ -58,7 +57,6 @@ export default function ManageProduct() {
             .then((res) => {
                 return res.json();
             }).then((data) => {
-                console.log(data);
                 setproductRequests([...data]);
             })
     }, [user.username])
@@ -75,9 +73,9 @@ export default function ManageProduct() {
     function changePassword() {
         navigate("/changepass");
     }
-    function goback(){
+    function goback() {
         navigate("/admin");
-    } 
+    }
     function accept(data) {
         return function (e) {
             acceptproduct(data).then(() => {
@@ -88,7 +86,7 @@ export default function ManageProduct() {
                     setproductRequests(productRequests.filter((element) => {
                         return element.id != data.id;
                     }))
-                    setproductDetails([...productDetails,data]);
+                    setproductDetails([...productDetails, data]);
                 })
             }).catch((err) => {
                 swal.fire({
@@ -100,7 +98,7 @@ export default function ManageProduct() {
     }
     function reject(id) {
         return function (e) {
-            rejectproduct({id:id}).then(() => {
+            rejectproduct({ id: id }).then(() => {
                 swal.fire({
                     icon: "success",
                     title: "Product Rejected Successfully"
@@ -149,21 +147,21 @@ export default function ManageProduct() {
                     <th className={`${styles.cell} ${styles.height}`}>Action</th>
                 </tr>
                 {
-                    productRequests.length>0 ?
-                    productRequests.map((element) => {
-                        return (
-                            <tr>
-                                <td className={styles.cell}>{element.id}</td>
-                                <td className={styles.cell}>{element.seller_id}</td>
-                                <td className={styles.cell}>{element.name}</td>
-                                <td className={styles.cell}><img src={"http://localhost:3000/"+ element.image}/></td>
-                                <td className={styles.cell}>{element.quantity}</td>
-                                <td className={styles.cell}>{"Rs."+element.price}</td>
-                                <td className={styles.cell}><div className={styles.buttonpart}><button onClick={accept(element)}>Accept</button> <button onClick={reject(element.id)}>Reject</button></div></td>
-                            </tr>
-                        )
-                    }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Product Requests Found</tr>
+                    productRequests.length > 0 ?
+                        productRequests.map((element) => {
+                            return (
+                                <tr>
+                                    <td className={styles.cell}>{element.id}</td>
+                                    <td className={styles.cell}>{element.seller_id}</td>
+                                    <td className={styles.cell}>{element.name}</td>
+                                    <td className={styles.cell}><img src={"http://localhost:3000/" + element.image} /></td>
+                                    <td className={styles.cell}>{element.quantity}</td>
+                                    <td className={styles.cell}>{"Rs." + element.price}</td>
+                                    <td className={styles.cell}><div className={styles.buttonpart}><button onClick={accept(element)}>Accept</button> <button onClick={reject(element.id)}>Reject</button></div></td>
+                                </tr>
+                            )
+                        }) :
+                        <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Product Requests Found</tr>
                 }
             </table>
             <table className={styles.back2}>
@@ -177,20 +175,20 @@ export default function ManageProduct() {
                     <th className={`${styles.cell} ${styles.height}`}>Price</th>
                 </tr>
                 {
-                    productDetails.length>0 ?
-                    productDetails.map((element) => {
-                        return (
-                            <tr>
-                                <td className={styles.cell}>{element.id}</td>
-                                <td className={styles.cell}>{element.seller_id}</td>
-                                <td className={styles.cell}>{element.name}</td>
-                                <td className={styles.cell}><img src={"http://localhost:3000/"+ element.image}/></td>
-                                <td className={styles.cell}>{element.quantity}</td>
-                                <td className={styles.cell}>{"Rs."+element.price}</td>
-                            </tr>
-                        )
-                    }):
-                    <tr className={styles.cell} style={{"color":"red","font-size":"1.5rem"}}>No Products Found</tr>
+                    productDetails.length > 0 ?
+                        productDetails.map((element) => {
+                            return (
+                                <tr>
+                                    <td className={styles.cell}>{element.id}</td>
+                                    <td className={styles.cell}>{element.seller_id}</td>
+                                    <td className={styles.cell}>{element.name}</td>
+                                    <td className={styles.cell}><img src={"http://localhost:3000/" + element.image} /></td>
+                                    <td className={styles.cell}>{element.quantity}</td>
+                                    <td className={styles.cell}>{"Rs." + element.price}</td>
+                                </tr>
+                            )
+                        }) :
+                        <tr className={styles.cell} style={{ "color": "red", "font-size": "1.5rem" }}>No Products Found</tr>
                 }
             </table>
         </>

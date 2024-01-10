@@ -82,7 +82,6 @@ export default function Purchaseform() {
                             })
                         })
                         .catch((err) => {
-                            console.log(err);
                             swal.fire({
                                 title: err,
                                 icon: "error"
